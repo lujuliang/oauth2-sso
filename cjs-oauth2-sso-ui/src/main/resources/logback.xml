@@ -1,0 +1,42 @@
+<configuration scan="true" scanPeriod="30 seconds">
+    <springProperty name="appName" source="info.build.name"/>
+    <springProperty name="version" source="info.build.version"/>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>%d{HH:mm:ss.SSS} [%thread] [%-5level] [UID: %X{appName}] %logger{36} - %msg%n</Pattern>
+        </encoder>
+    </appender>
+    
+    <appender name="ROLLING_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/app/ems/sso/logs/env-schedule-report2.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>/app/ems/sso/logs/env-schedule-report2.%d{yyyy-MM-dd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] [%-5level] [UID: %X{appName}] %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    
+    <logger name="org.apache.http" level="WARN">
+        <appender-ref ref="ROLLING_FILE"/>
+    </logger>
+    <logger name="hyatt.env" level="INFO">
+        <appender-ref ref="ROLLING_FILE"/>
+    </logger>
+    <logger name="org.springframework" level="INFO">
+        <appender-ref ref="ROLLING_FILE"/>
+    </logger>   
+    <logger name="org.hibernate" level="INFO">
+        <appender-ref ref="ROLLING_FILE"/>
+    </logger>
+    <logger name="hyatt.env.schedule.dao" level="DEBUG">
+       <appender-ref ref="ROLLING_FILE"/>
+    </logger>
+    
+    <root level="DEBUG">
+        <appender-ref ref="STDOUT"></appender-ref>
+        <appender-ref ref="ROLLING_FILE"/>
+    </root>
+</configuration>

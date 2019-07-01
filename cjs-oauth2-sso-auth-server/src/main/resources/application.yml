@@ -1,0 +1,17 @@
+server:
+  port: 8080
+  servlet: 
+      session: 
+          cookie: 
+              name: RESOURCE_SESSIONID
+  
+spring:
+  datasource:
+    url: jdbc:postgresql://127.0.0.1:5432/sso
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+logging:
+  level:
+    root: debug
+    
